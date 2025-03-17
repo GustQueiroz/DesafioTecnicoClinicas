@@ -1,0 +1,112 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Appointment {
+  date: DateTime!
+  id: Int!
+  patient: Patient
+  patientId: Int!
+  schedule: Schedule
+  scheduleId: Int!
+  status: String!
+}
+
+type Clinic {
+  id: Int!
+  location: String!
+  name: String!
+  professionals: [Professional!]
+  schedules: [Schedule!]
+}
+
+input CreateClinicDto {
+  location: String!
+  name: String!
+}
+
+input CreateProfessionalDto {
+  clinicId: Int!
+  name: String!
+  specialty: String!
+}
+
+input CreateScheduleDto {
+  date: DateTime!
+  professionalId: Int!
+  time: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  createClinic(createClinicDto: CreateClinicDto!): Clinic!
+  createProfessional(createProfessionalDto: CreateProfessionalDto!): Professional!
+  createSchedule(createScheduleDto: CreateScheduleDto!): Schedule!
+  removeClinic(id: Int!): Clinic!
+  removeProfessional(id: Int!): Professional!
+  removeSchedule(id: Int!): Schedule!
+  updateClinic(id: Int!, updateClinicDto: UpdateClinicDto!): Clinic!
+  updateProfessional(id: Int!, updateProfessionalDto: UpdateProfessionalDto!): Professional!
+  updateSchedule(id: Int!, updateScheduleDto: UpdateScheduleDto!): Schedule!
+}
+
+type Patient {
+  appointments: [Appointment!]
+  cpf: String!
+  id: Int!
+  name: String!
+}
+
+type Professional {
+  clinic: Clinic
+  clinicId: Int!
+  id: Int!
+  name: String!
+  schedules: [Schedule!]
+  specialty: String!
+}
+
+type Query {
+  clinic(id: Int!): Clinic!
+  clinics: [Clinic!]!
+  professional(id: Int!): Professional!
+  professionals(clinicId: Int!): [Professional!]!
+  schedule(id: Int!): Schedule!
+  schedules: [Schedule!]!
+  schedulesByClinic(clinicId: Int!): [Schedule!]!
+  schedulesByProfessional(professionalId: Int!): [Schedule!]!
+}
+
+type Schedule {
+  appointments: [Appointment!]
+  clinics: [Clinic!]
+  date: DateTime!
+  id: Int!
+  professional: Professional
+  professionalId: Int!
+  time: String!
+}
+
+input UpdateClinicDto {
+  id: Int
+  location: String
+  name: String
+}
+
+input UpdateProfessionalDto {
+  clinicId: Int
+  id: Int
+  name: String
+  specialty: String
+}
+
+input UpdateScheduleDto {
+  date: DateTime
+  id: Int
+  professionalId: Int
+  time: String
+}
